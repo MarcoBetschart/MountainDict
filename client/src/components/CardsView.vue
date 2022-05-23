@@ -1,20 +1,27 @@
 <template>
   <div class="container">
-    <div class="row">
-      <div class="col-md-4">
-        <div class="card" v-for="(item) in items" :key="item.name">
-          <img class="card-img-top" src="https://picsum.photos/id/200/320/320" alt="Card image cap">
-          <div class="card-body">
-            <h5 class="card-title">{{ item.name }}</h5>
-            <p class="card-text">
-              {{ item.name }}
-            </p>
-            <a href="#" class="btn btn-primary">Go somewhere</a>
-          </div>
+  <div class="row mt-2 mb-2">
+    <div class="input-group">
+    <input type="text" class="form-control" placeholder="Search">
+    <div class="input-group-append">
+      <button class="btn btn-primary" type="button">
+        Search
+      </button>
+    </div>
+  </div>
+  </div>
+      <div class="card flex-row mb-2" v-for="item in items" :key="item.id">
+        <img
+          class="card-img-left example-card-img-responsive"
+          src="https://picsum.photos/id/200/320/320"
+        />
+        <div class="card-body">
+          <h4 class="card-title h5 h4-sm">{{ item.name }}</h4>
+          <p class="card-text">{{ item.description }}</p>
+          <p class="card-text">{{ item.height }} m.ü.M</p>
         </div>
       </div>
     </div>
-  </div>
 </template>
 
 <script>
@@ -27,15 +34,30 @@ export default {
       items: [],
       description: "",
       editedDescription: "",
-      selected: {}
+      selected: {},
     };
   },
   async mounted() {
     const response = await axios.get("api/mountainitems/");
     this.items = response.data;
-  }
-}
+  },
+};
 </script>
 
 <style scoped>
+.has-search .form-control {
+    padding-left: 2.375rem;
+}
+
+.has-search .form-control-feedback {
+    position: absolute;
+    z-index: 2;
+    display: block;
+    width: 2.375rem;
+    height: 2.375rem;
+    line-height: 2.375rem;
+    text-align: center;
+    pointer-events: none;
+    color: #aaa;
+}
 </style>
