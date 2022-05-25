@@ -1,9 +1,13 @@
 <template>
   <nav class="navbar navbar-expand-lg navbar-light bg-light" id="nav-main">
     <div class="container-fluid">
-      <a class="navbar-brand" href="#">
-        <img src="../assets/logo.png" alt="Mountaindict" style="width:32px;height:32px;"/>
-        </a>
+      <router-link class="navbar-brand" to="/">
+        <img
+          src="../assets/logo.png"
+          alt="Mountaindict"
+          style="width: 32px; height: 32px"
+        />
+      </router-link>
       <button
         class="navbar-toggler"
         type="button"
@@ -18,10 +22,14 @@
       <div class="collapse navbar-collapse" id="navbarSupportedContent">
         <ul class="navbar-nav me-auto mb-2 mb-lg-0">
           <li class="nav-item">
-            <a class="nav-link active" aria-current="page" href="#">Home</a>
+            <router-link class="nav-link active" aria-current="page" to="/"
+              >Home</router-link
+            >
           </li>
           <li class="nav-item">
-            <a class="nav-link" href="#">Link</a>
+            <router-link class="nav-link active" aria-current="page" to="/"
+              >Home</router-link
+            >
           </li>
           <li class="nav-item dropdown">
             <a
@@ -41,26 +49,9 @@
               <li><a class="dropdown-item" href="#">Something else here</a></li>
             </ul>
           </li>
-          <li class="nav-item">
-            <a
-              class="nav-link disabled"
-              href="#"
-              tabindex="-1"
-              aria-disabled="true"
-              >Disabled</a
-            >
-          </li>
         </ul>
-        <form class="d-flex">
-          <input
-            class="form-control me-2"
-            type="search"
-            placeholder="Search"
-            aria-label="Search"
-          />
-          <button class="btn btn-outline-success" type="submit">Search</button>
-        </form>
       </div>
+      <router-link class="nav-link active" aria-current="page" to="/login">Login</router-link>
     </div>
   </nav>
 </template>

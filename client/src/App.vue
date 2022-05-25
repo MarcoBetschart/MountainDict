@@ -1,31 +1,25 @@
 <template>
-  <CoverView />
-  <NavigationView />
-  <!-- <JumbotronView />
-  <CTAView /> -->
-  <CardsView />
-  <FooterView />
+  <div>
+    <CoverView />
+    <NavigationView />
+    <router-view />
+    <FooterView />
+  </div>
 </template>
 
 <script>
-import CoverView from './components/CoverView.vue'
-import NavigationView from './components/NavigationView.vue'
-// import JumbotronView from './components/JumbotronView.vue'
-// import CTAView from './components/CTAView.vue'
-import CardsView from './components/CardsView.vue'
-import FooterView from './components/FooterView.vue'
+import CoverView from "./components/CoverView.vue";
+import NavigationView from "./components/NavigationView.vue";
+import FooterView from "./components/FooterView.vue";
 
 export default {
-  name: 'App',
+  name: "App",
   components: {
     CoverView,
     NavigationView,
-    // JumbotronView,
-    // CTAView,
-    CardsView,
-    FooterView
-  }
-}
+    FooterView,
+  },
+};
 </script>
 
 <style>
