@@ -1,4 +1,5 @@
 module.exports = {
     mongoUri: 'mongodb://localhost/mountaindict',
-    PORT: 3000
+    PORT: 3000,
+    secret: "password"
 }

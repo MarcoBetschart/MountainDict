@@ -6,6 +6,7 @@ const cors = require('cors')
 const morgan = require('morgan')
 const bodyParser = require('body-parser')
 const mountainnItemRoutes = require('./routes/api/MountainItems')
+const userRoutes = require('./routes/api/Users')
 
 app.use(cors())
 app.use(morgan('tiny'))
@@ -19,5 +20,6 @@ mongoose.connect(mongoUri, {
     .catch((err) => console.log(err))
 
 app.use('/api/MountainItems', mountainnItemRoutes)
+app.use('/api/users', userRoutes)
 
 app.listen(PORT, () => console.log(`App listening at http://localhost:${PORT}`))

@@ -1,5 +1,5 @@
 <template>
-  <nav class="navbar navbar-expand-lg navbar-light bg-light" id="nav-main">
+  <nav class="navbar navbar-expand-lg navbar-light bg-light">
     <div class="container-fluid">
       <router-link class="navbar-brand" to="/">
         <img
@@ -19,46 +19,79 @@
       >
         <span class="navbar-toggler-icon"></span>
       </button>
+
       <div class="collapse navbar-collapse" id="navbarSupportedContent">
-        <ul class="navbar-nav me-auto mb-2 mb-lg-0">
+        <ul class="navbar-nav mr-auto">
           <li class="nav-item">
-            <router-link class="nav-link active" aria-current="page" to="/"
+            <router-link class="nav-link" aria-current="page" to="/"
               >Home</router-link
             >
           </li>
-          <li class="nav-item">
-            <router-link class="nav-link active" aria-current="page" to="/"
-              >Home</router-link
-            >
-          </li>
-          <li class="nav-item dropdown">
+        </ul>
+        <ul class="navbar-nav ms-auto nav-flex-icons">
+          <li class="nav-item dropdown" v-if="user.name != null">
             <a
               class="nav-link dropdown-toggle"
               href="#"
-              id="navbarDropdown"
+              id="iconToggle"
               role="button"
               data-bs-toggle="dropdown"
               aria-expanded="false"
             >
-              Dropdown
+              <i class="bi bi-person"></i> Profile
             </a>
-            <ul class="dropdown-menu" aria-labelledby="navbarDropdown">
-              <li><a class="dropdown-item" href="#">Action</a></li>
-              <li><a class="dropdown-item" href="#">Another action</a></li>
-              <li><hr class="dropdown-divider" /></li>
-              <li><a class="dropdown-item" href="#">Something else here</a></li>
+            <ul
+              class="dropdown-menu dropdown-menu-end"
+              aria-labelledby="navbarDropdown"
+            >
+              <li><a class="dropdown-item" href="#">Profile</a></li>
+              <li><a class="dropdown-item" @click="logUserOut">Logout</a></li>
             </ul>
+          </li>
+          <li class="nav-item" v-if="user.name == null">
+            <router-link class="nav-link" aria-current="page" to="/login"
+              >LogIn</router-link
+            >
+          </li>
+          <li class="nav-item" v-if="user.name == null">
+            <router-link class="nav-link" aria-current="page" to="/register"
+              >Sign up</router-link
+            >
           </li>
         </ul>
       </div>
-      <router-link class="nav-link active" aria-current="page" to="/login">Login</router-link>
     </div>
   </nav>
 </template>
 
 <script>
+import router from "@/router";
+import VueJwtDecode from "vue-jwt-decode";
+
 export default {
-  name: "NavigationView",
+  data() {
+    return {
+      user: {},
+    };
+  },
+  methods: {
+    getUserDetails() {
+      if (localStorage.getItem("jwt") == null) {
+        return;
+      }
+      let token = localStorage.getItem("jwt");
+      let decoded = VueJwtDecode.decode(token);
+      this.user = decoded;
+    },
+    logUserOut() {
+      localStorage.removeItem("jwt");
+      router.go();
+      router.push("/");
+    },
+  },
+  created() {
+    this.getUserDetails();
+  },
 };
 </script>
 
