@@ -27,6 +27,16 @@
               >Home</router-link
             >
           </li>
+          <li class="nav-item">
+            <router-link class="nav-link" aria-current="page" to="/search"
+              >Search</router-link
+            >
+          </li>
+          <li class="nav-item">
+            <router-link class="nav-link" aria-current="page" to="/new"
+              >New mountain</router-link
+            >
+          </li>
         </ul>
         <ul class="navbar-nav ms-auto nav-flex-icons">
           <li class="nav-item dropdown" v-if="user.name != null">

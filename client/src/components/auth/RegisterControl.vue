@@ -75,7 +75,6 @@ export default {
   methods: {
     async registerUser() {
       try {
-        
         let response = await axios.post("http://localhost:3000/api/users/register", this.register);
         let token = response.data.token;
         if (token) {
