@@ -1,15 +1,15 @@
 <template>
   <div class="register">
-    <NavigationView/>
+    <MainNavigation/>
     <Register />
   </div>
 </template>
 <script>
 import Register from "@/components/auth/RegisterControl";
-import NavigationView from "@/components/NavigationView.vue";
+import MainNavigation from "@/components/MainNavigation.vue";
 export default {
   components: {
-    NavigationView,
+    MainNavigation,
     Register
 }
 };

@@ -1,14 +1,14 @@
 <template>
-  <NavigationView/>
+  <MainNavigation/>
   <Login />
 </template>
 <script>
 import Login from "@/components/auth/LoginControl";
-import NavigationView from "@/components/NavigationView.vue";
+import MainNavigation from "@/components/MainNavigation.vue";
 export default {
   components: {
     Login,
-    NavigationView
+    MainNavigation
 }
 };
 </script>

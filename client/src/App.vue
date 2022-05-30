@@ -1,20 +1,20 @@
 <template>
   <div>
-    <CoverView />
+    <CoverPicture />
     <router-view />
-    <FooterView />
+    <MainFooter />
   </div>
 </template>
 
 <script>
-import CoverView from "./components/CoverView.vue";
-import FooterView from "./components/FooterView.vue";
+import CoverPicture from "./components/CoverPicture.vue";
+import MainFooter from "./components/MainFooter.vue";
 
 export default {
   name: "App",
   components: {
-    CoverView,
-    FooterView,
+    CoverPicture,
+    MainFooter,
   },
 };
 </script>

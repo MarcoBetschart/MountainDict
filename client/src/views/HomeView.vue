@@ -1,17 +1,17 @@
 <template>
-  <NavigationView />
-  <CardsView />
+  <MainNavigation />
+  <Cards />
 </template>
 
 <script>
-import CardsView from "../components/CardsView.vue";
-import NavigationView from "@/components/NavigationView.vue";
+import Cards from "../components/Cards.vue";
+import MainNavigation from "@/components/MainNavigation.vue";
 
 export default {
   name: "HomeView",
   components: {
-    NavigationView,
-    CardsView
+    MainNavigation,
+    Cards
   },
 };
 </script>
