@@ -110,24 +110,31 @@ export default {
         latitude: null,
         officialPath: null,
         img: null,
-      }
+      },
+      selectedimage: null
     };
   },
   methods: {
     onFileSelected(event) {
-      let formData = new FormData();
-      formData.append("file", event.target.files[0]);
-      this.newMountain.img = formData;
+      this.selectedimage = event.target.files[0];
     },
     async addMountain() {
-
+      let formdata = new FormData();
+      formdata.append('img', this.selectedimage, this.selectedimage.name)
+      formdata.append('name', this.newMountain.name)
+      formdata.append('description', this.newMountain.description)
+      formdata.append('height', this.newMountain.height)
+      formdata.append('longitude', this.newMountain.longitude)
+      formdata.append('latitude', this.newMountain.latitude)
+      formdata.append('officialPath', this.newMountain.officialPath)
       try {
         await axios.post(
           "http://localhost:3000/api/mountainitems",
-          this.newMountain
+          formdata
         );
         router.push("/");
       } catch (err) {
+        console.log(err)
         let error = err.response;
         if (error.status == 409) {
           swal("Error", error.data.message, "error");

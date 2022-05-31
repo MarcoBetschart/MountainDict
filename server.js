@@ -11,6 +11,7 @@ const userRoutes = require('./routes/api/Users')
 app.use(cors())
 app.use(morgan('tiny'))
 app.use(bodyParser.json())
+app.use('/uploads', express.static('uploads'))
 
 mongoose.connect(mongoUri, {
         useNewUrlParser: true,

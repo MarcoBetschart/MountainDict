@@ -17,7 +17,7 @@ const MountainItemSchema = new Schema({
 		enum: [ 'Wanderweg', 'Bergwanderweg', 'Alpiner Wanderweg', 'Kein offizieller Weg' ]
 	},
 	img: {
-		data: Buffer,
+		data: String,
 		contentType: String
 	}
 });
