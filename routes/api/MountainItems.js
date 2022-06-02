@@ -43,6 +43,21 @@ router.get('/', async (req, res) => {
     }
 })
 
+router.get('/:id', async (req, res) => {
+  const id = req.params.id;
+  MountainItem.findById(id)
+    .then(data => {
+      if (!data)
+        res.status(404).send({ message: "Not found Mountain with id " + id });
+      else res.send(data);
+    })
+    .catch(err => {
+      res
+        .status(500)
+        .send({ message: "Error retrieving Mountain with id=" + id });
+    });
+})
+
 router.post('/', upload.single('img'), async (req, res) => {
     const newMountain = new MountainItem(req.body)
     newMountain.img.data = req.file.path

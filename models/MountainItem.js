@@ -19,7 +19,12 @@ const MountainItemSchema = new Schema({
 	img: {
 		data: String,
 		contentType: String
-	}
+	},
+	ratings: [{
+		name: String,
+		rating: Number,
+		description: String
+	}]
 });
 
 const MountainItem = model('mountainListItem', MountainItemSchema);

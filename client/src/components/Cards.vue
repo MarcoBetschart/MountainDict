@@ -8,13 +8,15 @@
         </div>
       </div>
     </div>
-    <div class="card mb-2" v-for="item in items" :key="item.id">
+    <div class="card mb-2" v-for="item in items" :key="item._id">
       <img class="card-img-top" v-bind:src="getImagePath(item)" />
       <div class="card-body">
         <h4 class="card-title h5 h4-sm">{{ item.name }}</h4>
         <p class="card-text">{{ item.description }}</p>
         <p class="card-text">{{ item.height }} m.ü.M</p>
-        <a href="#" class="btn btn-primary">Details</a>
+        <p class="card-text">Rating: {{ getAvg(item.ratings) }}</p>
+        <StarRatingReadonly :rating="getAvg(item.ratings)"/>
+        <router-link class="btn btn-primary" aria-current="page" :to="{ name: 'MountainDetails', params: {id: item._id}}">Details</router-link>
       </div>
     </div>
   </div>
@@ -22,9 +24,12 @@
 
 <script>
 import axios from "axios";
-
+import StarRatingReadonly from "./StarRatingReadonly.vue";
 export default {
   name: "CardsView",
+  components: {
+    StarRatingReadonly
+  },
   data() {
     return {
       items: [],
@@ -40,6 +45,11 @@ export default {
   methods: {
     getImagePath(imgData) {
       return "http://localhost:3000/" + imgData.img.data;
+    },
+    getAvg(ratings) {
+      let ratingValues = ratings.map(ele=>ele.rating);
+      const sum = ratingValues.reduce((a, b) => a + b, 0);
+      return sum / ratingValues.length || 0;
     },
   },
 };
