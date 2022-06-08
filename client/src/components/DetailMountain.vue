@@ -10,15 +10,47 @@
           <h4 class="card-title h5 h4-sm">{{ mountainItem.name }}</h4>
           <p class="card-text">{{ mountainItem.description }}</p>
           <p class="card-text">{{ mountainItem.height }} m.ü.M</p>
+          <div class="ratings">
+        <hr/>
+
+            <NewRating :mountainitem="mountainItem"/>
+            <RatingSummary />
+            <div
+              class="container"
+              v-for="rating in mountainItem.ratings"
+              :key="rating.name"
+            >
+              <RatingDetail :rating="rating" />
+            </div>
+          </div>
+          <div class="container">
+            <nav aria-label="Page navigation example">
+      <ul class="pagination">
+        <li class="page-item">
+          <button type="button" class="page-link" v-if="page != 1" @click="page--"> Previous </button>
+        </li>
+        <li class="page-item">
+          <button type="button" class="page-link" v-for="pageNumber in pages.slice(page-1, page+5)" :key="pageNumber" @click="page = pageNumber"> {{pageNumber}} </button>
+        </li>
+        <li class="page-item">
+          <button type="button" @click="page++" v-if="page < pages.length" class="page-link"> Next </button>
+        </li>
+      </ul>
+    </nav>  
+          </div>
         </div>
       </div>
-      </div>
+    </div>
   </div>
 </template>
 
 <script>
 import axios from "axios";
 import { useRoute } from "vue-router";
+import RatingDetail from "./RatingDetail.vue";
+import RatingSummary from "./RatingSummary.vue";
+import NewRating from "./NewRating.vue";
+
 
 export default {
   name: "DetailMountain",
@@ -32,7 +64,12 @@ export default {
         latitude: null,
         officialPath: null,
         img: null,
+        ratings: null,
+        _id: null
       },
+      page: 1,
+      perPage: 9,
+      pages: [],
     };
   },
   async mounted() {
@@ -45,14 +82,77 @@ export default {
     this.mountainItem.latitude = response.data.latitude;
     this.mountainItem.officialPath = response.data.officialPath;
     this.mountainItem.img = response.data.img.data;
+    this.mountainItem.ratings = response.data.ratings;
+    this.mountainItem._id = response.data._id;
+    this.totalRows = this.mountainItem.ratings.length;
   },
   methods: {
     getImagePath(imgData) {
-      return "http://localhost:3000/" + imgData;
+      if (imgData != null) return "http://localhost:3000/" + imgData;
     },
+    setPages () {
+      let numberOfPages = Math.ceil(this.mountainItem.ratings.length / this.perPage);
+      for (let index = 1; index <= numberOfPages; index++) {
+        this.pages.push(index);
+      }
+    },
+    paginate (ratings) {
+      let page = this.page;
+      let perPage = this.perPage;
+      let from = (page * perPage) - perPage;
+      let to = (page * perPage);
+      return  ratings.slice(from, to);
+    }
   },
+  computed: {
+    displayedRatings () {
+      return this.paginate(this.mountainItem.ratings);
+    }
+  },
+  watch: {
+    ratings () {
+      this.setPages();
+    }
+  },
+  filters: {
+    trimWords(value){
+      return value.split(" ").splice(0,20).join(" ") + '...';
+  }},
+  components: { RatingDetail, RatingSummary, NewRating },
 };
 </script>
 
 <style scoped>
+.pagination {
+  height: 50px;
+  font-size: 19;
+}
+.card {
+  flex-direction: row;
+  align-items: center;
+}
+.card-title {
+  font-weight: bold;
+}
+.card img {
+  width: 30%;
+  border-top-right-radius: 0;
+  border-bottom-left-radius: calc(0.25rem - 1px);
+}
+@media only screen and (max-width: 768px) {
+  .card-body {
+    padding: 0.5em 1.2em;
+  }
+  .card-body .card-text {
+    margin: 0;
+  }
+  .card img {
+    width: 50%;
+  }
+}
+@media only screen and (max-width: 1200px) {
+  .card img {
+    width: 40%;
+  }
+}
 </style>
