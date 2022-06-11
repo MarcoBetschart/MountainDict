@@ -5,54 +5,73 @@
       <div style="float: left">
         <span style="float: left">Rating:</span>
         <br />
-        <div class="rate">
-          <input
-            type="radio"
-            id="star5"
-            name="rate"
-            :checked="rating.rating == 5"
-            value="5"
-            @change="this.rating.rating = 5"
-          />
-          <label for="star5" title="text">5 stars</label>
-          <input
-            type="radio"
-            id="star4"
-            name="rate"
-            :checked="rating.rating == 4"
-            value="4"
-            @change="this.rating.rating = 4"
-          />
-          <label for="star4" title="text">4 stars</label>
-          <input
-            type="radio"
-            id="star3"
-            name="rate"
-            :checked="rating.rating == 3"
-            value="3"
-            @change="this.rating.rating = 3"
-          />
-          <label for="star3" title="text">3 stars</label>
-          <input
-            type="radio"
-            id="star2"
-            name="rate"
-            :checked="rating.rating == 2"
-            value="2"
-            @change="this.rating.rating = 2"
-          />
-          <label for="star2" title="text">2 stars</label>
-          <input
-            type="radio"
-            id="star1"
-            name="rate"
-            :checked="rating.rating == 1"
-            value="1"
-            @change="this.rating.rating = 1"
-          />
-          <label for="star1" title="text">1 star</label>
-        </div>
+    <fieldset class="rate">
+      <input
+        type="radio"
+        id="rating10"
+        name="rating"
+        value="5"
+        :checked="rating == 5"
+      /><label for="rating10" title="5 stars"></label>
+      <input
+        type="radio"
+        id="rating9"
+        name="rating"
+        value="4.5"
+        :checked="rating == 4.5"
+      /><label class="half" for="rating9" title="4 1/2 stars"></label>
+      <input
+        type="radio"
+        id="rating8"
+        name="rating"
+        value="4"
+        :checked="rating == 4"
+      /><label for="rating8" title="4 stars"></label>
+      <input
+        type="radio"
+        id="rating7"
+        name="rating"
+        value="3.5"
+        :checked="rating == 3.5"
+      /><label class="half" for="rating7" title="3 1/2 stars"></label>
+      <input
+        type="radio"
+        id="rating5"
+        name="rating"
+        value="3"
+        :checked="rating == 3"
+      /><label for="rating5" title="2 1/2 stars"></label>
+      <input
+        type="radio"
+        id="rating4"
+        name="rating"
+        value="2.5"
+        :checked="rating == 2.5"
+      /><label class="half" for="rating4" title="2 stars"></label>
+      <input
+        type="radio"
+        id="rating3"
+        name="rating"
+        value="2"
+        :checked="rating == 2"
+      /><label for="rating3" title="1 1/2 stars"></label>
+      <input
+        type="radio"
+        id="rating2"
+        name="rating"
+        value="1.5"
+        :checked="rating == 1.5"
+      /><label class="half" for="rating2" title="1 star"></label>
+      <input
+        type="radio"
+        id="rating1"
+        name="rating"
+        value="1"
+        :checked="rating == 1"
+      /><label for="rating1" title="1/2 star"></label>
+    </fieldset>
       </div>
+      <br />
       <br />
       <br />
       <br />
@@ -68,7 +87,7 @@
       <br />
       <button
         class="btn btn-primary btn-login"
-        type="button"
+        type="submit"
         @click="AddRating"
       >
         Add
@@ -97,7 +116,6 @@ export default {
   methods: {
     async AddRating() {
       this.rating.name = this.getUserName();
-      console.log(this.rating);
       let formdata = new FormData();
       formdata.append("img", this.mountainitem.img);
       formdata.append("name", this.mountainitem.name);
@@ -134,38 +152,46 @@ export default {
 </script>
 
 <style scoped>
+@import url(//netdna.bootstrapcdn.com/font-awesome/3.2.1/css/font-awesome.css);
 .rate {
-  height: 30px;
-  float: left;
+  display: inline-block;
+  border: 0;
 }
-.rate:not(:checked) > input {
-  position: absolute;
-  top: -9999px;
+/* Hide radio */
+.rate > input {
+  display: none;
 }
-.rate:not(:checked) > label {
+/* Order correctly by floating highest to the right */
+.rate > label {
   float: right;
-  width: 1em;
-  overflow: hidden;
-  white-space: nowrap;
+}
+/* The star of the show */
+.rate > label:before {
+  display: inline-block;
+  font-size: 1.5rem;
+  padding: 0.3rem 0.2rem;
+  margin: 0;
   cursor: pointer;
-  font-size: 30px;
-  color: #ccc;
+  font-family: FontAwesome;
+  content: "\f005 "; /* full star */
 }
-.rate:not(:checked) > label:before {
-  content: "★ ";
+
+/* Half star trick */
+.rate .half:before {
+  content: "\f089 "; /* half star no outline */
+  position: absolute;
+  padding-right: 0;
 }
-.rate > input:checked ~ label {
-  color: #ffc700;
-}
-.rate:not(:checked) > label:hover,
-.rate:not(:checked) > label:hover ~ label {
-  color: #deb217;
-}
-.rate > input:checked + label:hover,
-.rate > input:checked + label:hover ~ label,
-.rate > input:checked ~ label:hover,
-.rate > input:checked ~ label:hover ~ label,
-.rate > label:hover ~ input:checked ~ label {
-  color: #c59b08;
+/* Click + hover color */
+input:checked ~ label, /* color current and previous stars on checked */
+label:hover, label:hover ~ label {
+  color: #73b100;
+} /* color previous stars on hover */
+
+/* Hover highlights */
+input:checked + label:hover, input:checked ~ label:hover, /* highlight current and previous stars */
+input:checked ~ label:hover ~ label, /* highlight previous selected stars for new rating */
+label:hover ~ input:checked ~ label /* highlight previous selected stars */ {
+  color: #a6e72d;
 }
 </style>

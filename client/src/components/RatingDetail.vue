@@ -1,17 +1,15 @@
 <template>
   <div class="row">
-      <hr />
-      <div class="review-block">
-        <div class="row">
-            <div class="review-block-rate">
-              <StarRatingReadonly :rating="ratingValues.rating" />
-            </div>
-            <h5>{{ ratingValues.name }}</h5>
-            <p>{{ ratingValues.description }}
-            </p>
+    <hr />
+    <div class="review-block">
+      <div class="row">
+        <div class="review-block-rate">
+          <StarRatingReadonly :rating="ratingValues.rating" />
         </div>
-        <hr />
+        <h5>{{ ratingValues.name }}</h5>
+        <p>{{ ratingValues.description }}</p>
       </div>
+    </div>
   </div>
 </template>
 
@@ -20,14 +18,14 @@ import StarRatingReadonly from "./StarRatingReadonly.vue";
 export default {
   name: "RatingDetails",
   components: {
-    StarRatingReadonly
+    StarRatingReadonly,
   },
   props: ["rating"],
   data() {
     return {
       ratingValues: this.rating,
     };
-  },
+  }
 };
 </script>
 

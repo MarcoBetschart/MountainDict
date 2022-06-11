@@ -11,32 +11,66 @@
           <p class="card-text">{{ mountainItem.description }}</p>
           <p class="card-text">{{ mountainItem.height }} m.ü.M</p>
           <div class="ratings">
-        <hr/>
+            <hr />
 
-            <NewRating :mountainitem="mountainItem"/>
-            <RatingSummary />
+            <NewRating :mountainitem="mountainItem" />
+            <RatingSummary
+              :fiveStar="fiveStar"
+              :fourStar="fourStar"
+              :threeStar="threeStar"
+              :twoStar="twoStar"
+              :oneStar="oneStar"
+              :totalRatings="totalRatings"
+            />
             <div
-              class="container"
+              class="row"
               v-for="rating in mountainItem.ratings"
-              :key="rating.name"
+              :key="rating._id"
             >
-              <RatingDetail :rating="rating" />
+              <hr />
+              <StarRatingReadonly :id="rating._id" :rating="rating.rating" ></StarRatingReadonly>
+              <div class="row">
+                <h5>{{ rating.name }}</h5>
+                <p>{{ rating.description }}</p>
+              </div>
             </div>
           </div>
           <div class="container">
             <nav aria-label="Page navigation example">
-      <ul class="pagination">
-        <li class="page-item">
-          <button type="button" class="page-link" v-if="page != 1" @click="page--"> Previous </button>
-        </li>
-        <li class="page-item">
-          <button type="button" class="page-link" v-for="pageNumber in pages.slice(page-1, page+5)" :key="pageNumber" @click="page = pageNumber"> {{pageNumber}} </button>
-        </li>
-        <li class="page-item">
-          <button type="button" @click="page++" v-if="page < pages.length" class="page-link"> Next </button>
-        </li>
-      </ul>
-    </nav>  
+              <ul class="pagination">
+                <li class="page-item">
+                  <button
+                    type="button"
+                    class="page-link"
+                    v-if="page != 1"
+                    @click="page--"
+                  >
+                    Previous
+                  </button>
+                </li>
+                <li class="page-item">
+                  <button
+                    type="button"
+                    class="page-link"
+                    v-for="pageNumber in pages.slice(page - 1, page + 5)"
+                    :key="pageNumber"
+                    @click="page = pageNumber"
+                  >
+                    {{ pageNumber }}
+                  </button>
+                </li>
+                <li class="page-item">
+                  <button
+                    type="button"
+                    @click="page++"
+                    v-if="page < pages.length"
+                    class="page-link"
+                  >
+                    Next
+                  </button>
+                </li>
+              </ul>
+            </nav>
           </div>
         </div>
       </div>
@@ -47,10 +81,9 @@
 <script>
 import axios from "axios";
 import { useRoute } from "vue-router";
-import RatingDetail from "./RatingDetail.vue";
 import RatingSummary from "./RatingSummary.vue";
 import NewRating from "./NewRating.vue";
-
+import StarRatingReadonly from "./StarRatingReadonly";
 
 export default {
   name: "DetailMountain",
@@ -65,11 +98,18 @@ export default {
         officialPath: null,
         img: null,
         ratings: null,
-        _id: null
+        _id: null,
       },
       page: 1,
       perPage: 9,
       pages: [],
+
+      fiveStar: null,
+      fourStar: null,
+      threeStar: null,
+      twoStar: null,
+      oneStar: null,
+      totalRatings: null,
     };
   },
   async mounted() {
@@ -85,40 +125,60 @@ export default {
     this.mountainItem.ratings = response.data.ratings;
     this.mountainItem._id = response.data._id;
     this.totalRows = this.mountainItem.ratings.length;
+
+    this.fiveStar = this.mountainItem.ratings.filter(
+      (r) => r.rating == 5
+    ).length;
+    this.fourStar = this.mountainItem.ratings.filter(
+      (r) => r.rating == 4
+    ).length;
+    this.threeStar = this.mountainItem.ratings.filter(
+      (r) => r.rating == 3
+    ).length;
+    this.twoStar = this.mountainItem.ratings.filter(
+      (r) => r.rating == 2
+    ).length;
+    this.oneStar = this.mountainItem.ratings.filter(
+      (r) => r.rating == 1
+    ).length;
+    this.totalRatings = this.mountainItem.ratings.length;
   },
   methods: {
     getImagePath(imgData) {
       if (imgData != null) return "http://localhost:3000/" + imgData;
     },
-    setPages () {
-      let numberOfPages = Math.ceil(this.mountainItem.ratings.length / this.perPage);
+    setPages() {
+      let numberOfPages = Math.ceil(
+        this.mountainItem.ratings.length / this.perPage
+      );
       for (let index = 1; index <= numberOfPages; index++) {
         this.pages.push(index);
       }
     },
-    paginate (ratings) {
+    paginate(ratings) {
       let page = this.page;
       let perPage = this.perPage;
-      let from = (page * perPage) - perPage;
-      let to = (page * perPage);
-      return  ratings.slice(from, to);
-    }
+      let from = page * perPage - perPage;
+      let to = page * perPage;
+      return ratings.slice(from, to);
+    },
   },
   computed: {
-    displayedRatings () {
+    displayedRatings() {
       return this.paginate(this.mountainItem.ratings);
-    }
+    },
   },
   watch: {
-    ratings () {
+    ratings() {
       this.setPages();
-    }
+    },
   },
   filters: {
-    trimWords(value){
-      return value.split(" ").splice(0,20).join(" ") + '...';
-  }},
-  components: { RatingDetail, RatingSummary, NewRating },
+    trimWords(value) {
+      return value.split(" ").splice(0, 20).join(" ") + "...";
+    },
+  },
+  components: { RatingSummary, NewRating, StarRatingReadonly },
 };
 </script>
 

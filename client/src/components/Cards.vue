@@ -15,8 +15,15 @@
         <p class="card-text">{{ item.description }}</p>
         <p class="card-text">{{ item.height }} m.ü.M</p>
         <p class="card-text">Rating: {{ getAvg(item.ratings) }}</p>
-        <StarRatingReadonly :rating="getAvg(item.ratings)"/>
-        <router-link class="btn btn-primary" aria-current="page" :to="{ name: 'MountainDetails', params: {id: item._id}}">Details</router-link>
+        <StarRatingReadonly class="card-text" :rating="getAvg(item.ratings)" />
+        <br />
+        <br />
+        <router-link
+          class="btn btn-primary"
+          aria-current="page"
+          :to="{ name: 'MountainDetails', params: { id: item._id } }"
+          >Details</router-link
+        >
       </div>
     </div>
   </div>
@@ -28,7 +35,7 @@ import StarRatingReadonly from "./StarRatingReadonly.vue";
 export default {
   name: "CardsView",
   components: {
-    StarRatingReadonly
+    StarRatingReadonly,
   },
   data() {
     return {
@@ -47,9 +54,10 @@ export default {
       return "http://localhost:3000/" + imgData.img.data;
     },
     getAvg(ratings) {
-      let ratingValues = ratings.map(ele=>ele.rating);
+      let ratingValues = ratings.map((ele) => ele.rating);
       const sum = ratingValues.reduce((a, b) => a + b, 0);
-      return Math.round(sum / ratingValues.length || 0);
+      console.log(sum);
+      return Math.round(sum / ratingValues.length * 2) / 2;
     },
   },
 };
@@ -85,9 +93,6 @@ export default {
   border-bottom-left-radius: calc(0.25rem - 1px);
 }
 @media only screen and (max-width: 768px) {
-  a {
-    display: none;
-  }
   .card-body {
     padding: 0.5em 1.2em;
   }

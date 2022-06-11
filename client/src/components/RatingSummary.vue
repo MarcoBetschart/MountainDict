@@ -1,88 +1,112 @@
 <template>
-  <div class="row">
-    <hr />
-    <div class="row justify-content-left d-flex">
-      <div class="col-md-4 d-flex flex-column">
-        <div class="rating-box">
-          <h1 class="pt-4">4.0</h1>
-          <p class="">out of 5</p>
-        </div>
-        <div>
-          <span class="fa fa-star star-active mx-1"></span>
-          <span class="fa fa-star star-active mx-1"></span>
-          <span class="fa fa-star star-active mx-1"></span>
-          <span class="fa fa-star star-active mx-1"></span>
-          <span class="fa fa-star star-inactive mx-1"></span>
-        </div>
+  <div class="row justify-content-center d-flex">
+    <div class="col-md-4 d-flex flex-column">
+      <div class="rating-box">
+        <h1 class="pt-4">
+          {{
+            Math.round(
+              ((fiveStar * 5 +
+                fourStar * 4 +
+                threeStar * 3 +
+                twoStar * 2 +
+                oneStar) / totalRatings) *
+                2
+            ) / 2
+          }}
+        </h1>
+        <p class="">out of 5</p>
       </div>
-      <div class="col-md-8">
-        <div class="rating-bar0 justify-content-center">
-          <table class="text-left mx-auto">
-            <tr>
-              <td class="rating-label">Excellent</td>
-              <td class="rating-bar">
-                <div class="bar-container">
-                  <div class="bar-5"></div>
-                </div>
-              </td>
-              <td class="text-right">123</td>
-            </tr>
-            <tr>
-              <td class="rating-label">Good</td>
-              <td class="rating-bar">
-                <div class="bar-container">
-                  <div class="bar-4"></div>
-                </div>
-              </td>
-              <td class="text-right">23</td>
-            </tr>
-            <tr>
-              <td class="rating-label">Average</td>
-              <td class="rating-bar">
-                <div class="bar-container">
-                  <div class="bar-3"></div>
-                </div>
-              </td>
-              <td class="text-right">10</td>
-            </tr>
-            <tr>
-              <td class="rating-label">Poor</td>
-              <td class="rating-bar">
-                <div class="bar-container">
-                  <div class="bar-2"></div>
-                </div>
-              </td>
-              <td class="text-right">3</td>
-            </tr>
-            <tr>
-              <td class="rating-label">Terrible</td>
-              <td class="rating-bar">
-                <div class="bar-container">
-                  <div class="bar-1"></div>
-                </div>
-              </td>
-              <td class="text-right">0</td>
-            </tr>
-          </table>
-        </div>
+      <div>
+        <span class="fa fa-star star-active mx-1"></span>
+        <span class="fa fa-star star-active mx-1"></span>
+        <span class="fa fa-star star-active mx-1"></span>
+        <span class="fa fa-star star-active mx-1"></span>
+        <span class="fa fa-star star-inactive mx-1"></span>
       </div>
     </div>
+    <table>
+      <tr>
+        <td class="rating-label">5 ★</td>
+        <td class="rating-bar">
+          <div class="bar-container">
+            <div
+              class="bar"
+              :style="{
+                width: (this.fiveStar / this.totalRatings) * 100 + '%',
+              }"
+            ></div>
+          </div>
+        </td>
+        <td class="text">{{ this.fiveStar }}</td>
+      </tr>
+      <tr>
+        <td class="rating-label">4 ★</td>
+        <td class="rating-bar">
+          <div class="bar-container">
+            <div
+              class="bar"
+              :style="{
+                width: (this.fourStar / this.totalRatings) * 100 + '%',
+              }"
+            ></div>
+          </div>
+        </td>
+        <td class="text">{{ fourStar }}</td>
+      </tr>
+      <tr>
+        <td class="rating-label">3 ★</td>
+        <td class="rating-bar">
+          <div class="bar-container">
+            <div
+              class="bar"
+              :style="{
+                width: (this.threeStar / this.totalRatings) * 100 + '%',
+              }"
+            ></div>
+          </div>
+        </td>
+        <td class="text">{{ threeStar }}</td>
+      </tr>
+      <tr>
+        <td class="rating-label">2 ★</td>
+        <td class="rating-bar">
+          <div class="bar-container">
+            <div
+              class="bar"
+              :style="{ width: (this.twoStar / this.totalRatings) * 100 + '%' }"
+            ></div>
+          </div>
+        </td>
+        <td class="text">{{ twoStar }}</td>
+      </tr>
+      <tr>
+        <td class="rating-label">1 ★</td>
+        <td class="rating-bar">
+          <div class="bar-container">
+            <div
+              class="bar"
+              :style="{ width: (this.oneStar / this.totalRatings) * 100 + '%' }"
+            ></div>
+          </div>
+        </td>
+        <td class="text">{{ oneStar }}</td>
+      </tr>
+    </table>
   </div>
 </template>
 
 <script>
-// import StarRatingReadonly from "./StarRatingReadonly.vue";
 export default {
   name: "RatingSummary",
-  components: {
-    // StarRatingReadonly
-  },
-  props: ["ratings"],
-  data() {
-    return {
-      ratingValues: this.ratings,
-    };
-  },
+  components: {},
+  props: [
+    "fiveStar",
+    "fourStar",
+    "threeStar",
+    "twoStar",
+    "oneStar",
+    "totalRatings",
+  ],
 };
 </script>
 
@@ -90,14 +114,16 @@ export default {
 .rating-box {
   width: 130px;
   height: 130px;
-  margin-right: auto;
+  margin: auto;
   margin-left: auto;
   background-color: #fbc02d;
   color: #fff;
 }
 
-.rating-label {
+.rating-label, .text {
+  width: 10%;
   font-weight: bold;
+  text-align: center;
 }
 
 .rating-bar {
@@ -112,39 +138,10 @@ export default {
   text-align: center;
   color: white;
   border-radius: 20px;
-  cursor: pointer;
   margin-bottom: 5px;
 }
 
-.bar-5 {
-  width: 70%;
-  height: 13px;
-  background-color: #fbc02d;
-  border-radius: 20px;
-}
-
-.bar-4 {
-  width: 30%;
-  height: 13px;
-  background-color: #fbc02d;
-  border-radius: 20px;
-}
-
-.bar-3 {
-  width: 20%;
-  height: 13px;
-  background-color: #fbc02d;
-  border-radius: 20px;
-}
-
-.bar-2 {
-  width: 10%;
-  height: 13px;
-  background-color: #fbc02d;
-  border-radius: 20px;
-}
-
-.bar-1 {
+.bar {
   width: 0%;
   height: 13px;
   background-color: #fbc02d;

@@ -119,7 +119,7 @@ export default {
       this.selectedimage = event.target.files[0];
     },
     async addMountain() {
-      let formdata = new FormData();
+      let formdata = new FormData();  1
       formdata.append('img', this.selectedimage, this.selectedimage.name)
       formdata.append('name', this.newMountain.name)
       formdata.append('description', this.newMountain.description)
@@ -127,6 +127,17 @@ export default {
       formdata.append('longitude', this.newMountain.longitude)
       formdata.append('latitude', this.newMountain.latitude)
       formdata.append('officialPath', this.newMountain.officialPath)
+      formdata.append('ratings', [{
+            "name": "Marco 2",
+            "rating": 5,
+            "description": "Hallo"
+        },
+        {
+            "name": "asdf",
+            "rating": 2,
+            "description": "asdfasdfasdf"
+        }
+    ])
       try {
         await axios.post(
           "http://localhost:3000/api/mountainitems",
@@ -137,9 +148,9 @@ export default {
         console.log(err)
         let error = err.response;
         if (error.status == 409) {
-          swal("Error", error.data.message, "error");
+          swal("Error", error.message, "error");
         } else {
-          swal("Error", error.data.err.message, "error");
+          swal("Error", error.err.message, "error");
         }
       }
     },

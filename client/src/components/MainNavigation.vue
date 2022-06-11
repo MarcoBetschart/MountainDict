@@ -1,5 +1,5 @@
 <template>
-  <nav class="navbar navbar-expand-lg navbar-light bg-light">
+  <nav class="navbar navbar-expand-lg navbar-light bg-light" id="nav-main">
     <div class="container-fluid">
       <router-link class="navbar-brand" to="/">
         <img
@@ -25,11 +25,6 @@
           <li class="nav-item">
             <router-link class="nav-link" aria-current="page" to="/"
               >Home</router-link
-            >
-          </li>
-          <li class="nav-item">
-            <router-link class="nav-link" aria-current="page" to="/search"
-              >Search</router-link
             >
           </li>
           <li class="nav-item">
