@@ -15,8 +15,15 @@
                   id="floatingInput"
                   placeholder="mountain"
                   v-model="newMountain.name"
+                  v-bind:class="{
+                    'form-control': true,
+                    'is-invalid': !validName(newMountain.name) && nameBlured,
+                  }"
+                  v-on:blur="nameBlured = true"
+                  v-on:focus="nameBlured = false"
                 />
                 <label for="floatingInput">Name</label>
+                <div class="invalid-feedback">Name is required</div>
               </div>
               <div class="form-floating mb-3">
                 <textarea
@@ -33,8 +40,15 @@
                   id="floatingInput"
                   placeholder="4450.4"
                   v-model="newMountain.height"
+                  v-bind:class="{
+                    'form-control': true,
+                    'is-invalid': !validHeight(newMountain.height) && heightBlured,
+                  }"
+                  v-on:blur="heightBlured = true"
+                  v-on:focus="heightBlured = false"
                 />
                 <label for="floatingInput">Height</label>
+                <div class="invalid-feedback">Height has to be greater than 0</div>
               </div>
               <div class="form-floating mb-3">
                 <input
@@ -62,6 +76,12 @@
                   id="select"
                   aria-label=".form-select-sm example"
                   v-model="newMountain.officialPath"
+                  v-bind:class="{
+                    'form-control': true,
+                    'is-invalid': !validPath(newMountain.officialPath) && pathBlured,
+                  }"
+                  v-on:blur="pathBlured = true"
+                  v-on:focus="pathBlured = false"
                 >
                   <option selected>Wanderweg</option>
                   <option>Bergwanderweg</option>
@@ -69,17 +89,25 @@
                   <option>Kein offizieller Weg</option>
                 </select>
                 <label for="select">Path</label>
+                <div class="invalid-feedback">Path is required</div>
               </div>
               <div class="form-floating mb-3">
                 <div class="mb-3">
-                  <label for="formFile" class="form-label">Choose Image </label>
+                  <label for="formFile" class="form-label">Choose Image</label>
                   <input
                     class="form-control"
                     type="file"
                     id="formFile"
                     accept="image/*"
                     @change="onFileSelected"
+                  v-bind:class="{
+                    'form-control': true,
+                    'is-invalid': !validImg(selectedimage) && imgBlured,
+                  }"
+                  v-on:blur="imgBlured = true"
+                  v-on:focus="imgBlured = false"
                   />
+                <div class="invalid-feedback">Image is required</div>
                 </div>
               </div>
               <div class="d-grid mb-3">
@@ -111,7 +139,13 @@ export default {
         officialPath: null,
         img: null,
       },
-      selectedimage: null
+      selectedimage: null,
+      nameBlured: false,
+      heightBlured: false,
+      pathBlured: false,
+      imgBlured: false,
+      valid: false,
+      submitted: false,
     };
   },
   methods: {
@@ -119,33 +153,21 @@ export default {
       this.selectedimage = event.target.files[0];
     },
     async addMountain() {
-      let formdata = new FormData();  1
-      formdata.append('img', this.selectedimage, this.selectedimage.name)
-      formdata.append('name', this.newMountain.name)
-      formdata.append('description', this.newMountain.description)
-      formdata.append('height', this.newMountain.height)
-      formdata.append('longitude', this.newMountain.longitude)
-      formdata.append('latitude', this.newMountain.latitude)
-      formdata.append('officialPath', this.newMountain.officialPath)
-      formdata.append('ratings', [{
-            "name": "Marco 2",
-            "rating": 5,
-            "description": "Hallo"
-        },
-        {
-            "name": "asdf",
-            "rating": 2,
-            "description": "asdfasdfasdf"
-        }
-    ])
+      this.validate();
+      if (this.valid === true) 
+        return;
+      let formdata = new FormData();
+      formdata.append("img", this.selectedimage, this.selectedimage.name);
+      formdata.append("name", this.newMountain.name);
+      formdata.append("description", this.newMountain.description);
+      formdata.append("height", this.newMountain.height);
+      // formdata.append('longitude', this.newMountain.longitude)
+      // formdata.append('latitude', this.newMountain.latitude)
+      formdata.append("officialPath", this.newMountain.officialPath);
       try {
-        await axios.post(
-          "http://localhost:3000/api/mountainitems",
-          formdata
-        );
+        await axios.post("/api/mountainitems", formdata);
         router.push("/");
       } catch (err) {
-        console.log(err)
         let error = err.response;
         if (error.status == 409) {
           swal("Error", error.message, "error");
@@ -153,6 +175,34 @@ export default {
           swal("Error", error.err.message, "error");
         }
       }
+    },
+    validate: function () {
+      this.valid = false
+      this.nameBlured = true;
+      this.heightBlured = true;
+      this.pathBlured = true;
+      this.imgBlured = true;
+
+      let nameValid = this.validName(this.newMountain.name);
+      let heightValid = this.validHeight(this.newMountain.height)
+      let pathValid = this.validPath(this.newMountain.path)
+      let imgValid = this.validImg(this.newMountain.img)
+
+      if (nameValid && heightValid && imgValid && pathValid) {
+        this.valid = true;
+      }
+    },
+    validName: function (name) {
+      return name !== '';
+    },
+    validHeight: function (height) {
+      return height > 0;
+    },
+    validPath: function (path) {
+      return path !== '' && path !== null && path !== undefined;
+    },
+    validImg: function (img) {
+      return img !== null;
     },
   },
 };
