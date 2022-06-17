@@ -6,9 +6,13 @@
           {{
             Math.round(
               ((fiveStar * 5 +
+                fourHalfStar * 4.5 +
                 fourStar * 4 +
+                threeHalfStar * 3.5 +
                 threeStar * 3 +
+                twoHalfStar * 2.5 +
                 twoStar * 2 +
+                oneHalfStar * 1.5 +
                 oneStar) / totalRatings) *
                 2
             ) / 2
@@ -40,6 +44,20 @@
         <td class="text">{{ this.fiveStar }}</td>
       </tr>
       <tr>
+        <td class="rating-label">4.5 ★</td>
+        <td class="rating-bar">
+          <div class="bar-container">
+            <div
+              class="bar"
+              :style="{
+                width: (this.fourHalfStar / this.totalRatings) * 100 + '%',
+              }"
+            ></div>
+          </div>
+        </td>
+        <td class="text">{{ fourHalfStar }}</td>
+      </tr>
+      <tr>
         <td class="rating-label">4 ★</td>
         <td class="rating-bar">
           <div class="bar-container">
@@ -52,6 +70,20 @@
           </div>
         </td>
         <td class="text">{{ fourStar }}</td>
+      </tr>
+      <tr>
+        <td class="rating-label">3.5 ★</td>
+        <td class="rating-bar">
+          <div class="bar-container">
+            <div
+              class="bar"
+              :style="{
+                width: (this.threeHalfStar / this.totalRatings) * 100 + '%',
+              }"
+            ></div>
+          </div>
+        </td>
+        <td class="text">{{ threeHalfStar }}</td>
       </tr>
       <tr>
         <td class="rating-label">3 ★</td>
@@ -68,6 +100,18 @@
         <td class="text">{{ threeStar }}</td>
       </tr>
       <tr>
+        <td class="rating-label">2.5 ★</td>
+        <td class="rating-bar">
+          <div class="bar-container">
+            <div
+              class="bar"
+              :style="{ width: (this.twoHalfStar / this.totalRatings) * 100 + '%' }"
+            ></div>
+          </div>
+        </td>
+        <td class="text">{{ twoHalfStar }}</td>
+      </tr>
+      <tr>
         <td class="rating-label">2 ★</td>
         <td class="rating-bar">
           <div class="bar-container">
@@ -78,6 +122,18 @@
           </div>
         </td>
         <td class="text">{{ twoStar }}</td>
+      </tr>
+      <tr>
+        <td class="rating-label">1.5 ★</td>
+        <td class="rating-bar">
+          <div class="bar-container">
+            <div
+              class="bar"
+              :style="{ width: (this.oneHalfStar / this.totalRatings) * 100 + '%' }"
+            ></div>
+          </div>
+        </td>
+        <td class="text">{{ oneHalfStar }}</td>
       </tr>
       <tr>
         <td class="rating-label">1 ★</td>
@@ -101,9 +157,13 @@ export default {
   components: {},
   props: [
     "fiveStar",
+    "fourHalfStar",
     "fourStar",
+    "threeHalfStar",
     "threeStar",
+    "twoHalfStar",
     "twoStar",
+    "oneHalfStar",
     "oneStar",
     "totalRatings",
   ],
@@ -121,9 +181,9 @@ export default {
 }
 
 .rating-label, .text {
-  width: 10%;
+  width: 15%;
   font-weight: bold;
-  text-align: center;
+  text-align: right;
 }
 
 .rating-bar {

@@ -56,7 +56,6 @@ export default {
     getAvg(ratings) {
       let ratingValues = ratings.map((ele) => ele.rating);
       const sum = ratingValues.reduce((a, b) => a + b, 0);
-      console.log(sum);
       return Math.round(sum / ratingValues.length * 2) / 2;
     },
   },

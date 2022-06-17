@@ -34,7 +34,7 @@
           </li>
         </ul>
         <ul class="navbar-nav ms-auto nav-flex-icons">
-          <li class="nav-item dropdown" v-if="user.name != null">
+          <li class="nav-item" v-if="user.name != null">
             <a
               class="nav-link dropdown-toggle"
               href="#"
@@ -49,7 +49,10 @@
               class="dropdown-menu dropdown-menu-end"
               aria-labelledby="navbarDropdown"
             >
-              <li><a class="dropdown-item" href="#">Profile</a></li>
+              <li>
+            <router-link class="dropdown-item" aria-current="page" to="/profile"
+              >Profile</router-link
+            ></li>
               <li><a class="dropdown-item" @click="logUserOut">Logout</a></li>
             </ul>
           </li>

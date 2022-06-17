@@ -10,21 +10,21 @@
                 <input
                   type="email"
                   class="form-control"
-                  id="floatingInput"
+                  id="email"
                   placeholder="name@example.com"        
                   v-model="login.email"
                 />
-                <label for="floatingInput">Email address</label>
+                <label for="email">Email address</label>
               </div>
               <div class="form-floating mb-3">
                 <input
                   type="password"
                   class="form-control"
-                  id="floatingPassword"
+                  id="Password"
                   placeholder="Password"
                   v-model="login.password"
                 />
-                <label for="floatingPassword">Password</label>
+                <label for="Password">Password</label>
               </div>
 
               <div class="form-check mb-3">
@@ -70,7 +70,7 @@ export default {
       login: {
         email: "",
         password: ""
-      }
+      },
     };
   },
   methods: {
@@ -83,10 +83,33 @@ export default {
           router.push("/");
         }
       } catch (err) {
-        swal("Error", "Something went wrong", "error");
-        console.log(err.response);
+        swal("Error", "Wrong Credentials", "error");
       }
-    }
+    },
+    
+    validate: function () {
+      this.valid = false
+      this.nameBlured = true;
+      this.heightBlured = true;
+      this.pwBlured = true;
+
+      let nameValid = this.validName(this.newMountain.name);
+      let heightValid = this.validHeight(this.newMountain.height)
+      let pwValid = this.validPw(this.newMountain.path)
+
+      if (nameValid && heightValid && pwValid) {
+        this.valid = true;
+      }
+    },
+    validName: function (name) {
+      return name !== '';
+    },
+    validEmail: function (height) {
+      return height > 0;
+    },
+    validPw: function (path) {
+      return path !== '' && path !== null && path !== undefined;
+    },
   }
 };
 </script>

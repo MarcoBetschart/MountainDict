@@ -13,12 +13,19 @@
           <div class="ratings">
             <hr />
 
-            <NewRating :mountainitem="mountainItem" />
+            <NewRating :mountainitem="mountainItem" v-if="!hasCommented" />
+            <h5 v-else>
+              You already added a rating for this mountain.
+            </h5>
             <RatingSummary
               :fiveStar="fiveStar"
+              :fourHalfStar="fourHalfStar"
               :fourStar="fourStar"
+              :threeHalfStar="threeHalfStar"
               :threeStar="threeStar"
+              :twoHalfStar="twoHalfStar"
               :twoStar="twoStar"
+              :oneHalfStar="oneHalfStar"
               :oneStar="oneStar"
               :totalRatings="totalRatings"
             />
@@ -28,7 +35,10 @@
               :key="rating._id"
             >
               <hr />
-              <StarRatingReadonly :id="rating._id" :rating="rating.rating" ></StarRatingReadonly>
+              <StarRatingReadonly
+                :id="rating._id"
+                :rating="rating.rating"
+              ></StarRatingReadonly>
               <div class="row">
                 <h5>{{ rating.name }}</h5>
                 <p>{{ rating.description }}</p>
@@ -84,6 +94,7 @@ import { useRoute } from "vue-router";
 import RatingSummary from "./RatingSummary.vue";
 import NewRating from "./NewRating.vue";
 import StarRatingReadonly from "./StarRatingReadonly";
+import VueJwtDecode from "vue-jwt-decode";
 
 export default {
   name: "DetailMountain",
@@ -105,11 +116,17 @@ export default {
       pages: [],
 
       fiveStar: null,
+      fourHalfStar: null,
       fourStar: null,
+      threeHalfStar: null,
       threeStar: null,
+      twoHalfStar: null,
       twoStar: null,
+      oneHalfStar: null,
       oneStar: null,
       totalRatings: null,
+
+      hasCommented: false,
     };
   },
   async mounted() {
@@ -129,21 +146,49 @@ export default {
     this.fiveStar = this.mountainItem.ratings.filter(
       (r) => r.rating == 5
     ).length;
+    this.fourHalfStar = this.mountainItem.ratings.filter(
+      (r) => r.rating == 4.5
+    ).length;
     this.fourStar = this.mountainItem.ratings.filter(
       (r) => r.rating == 4
+    ).length;
+    this.threeHalfStar = this.mountainItem.ratings.filter(
+      (r) => r.rating == 3.5
     ).length;
     this.threeStar = this.mountainItem.ratings.filter(
       (r) => r.rating == 3
     ).length;
+    this.twoHalfStar = this.mountainItem.ratings.filter(
+      (r) => r.rating == 2.5
+    ).length;
     this.twoStar = this.mountainItem.ratings.filter(
       (r) => r.rating == 2
+    ).length;
+    this.oneHalfStar = this.mountainItem.ratings.filter(
+      (r) => r.rating == 1.5
     ).length;
     this.oneStar = this.mountainItem.ratings.filter(
       (r) => r.rating == 1
     ).length;
     this.totalRatings = this.mountainItem.ratings.length;
+
+
+    if (this.mountainItem.ratings.length === 0) {
+      this.hasCommented = false;
+    } else {
+      this.hasCommented = this.mountainItem.ratings.some(
+        (x) => x.name === this.getUserName()
+      );
+    }
   },
   methods: {
+    getUserName() {
+      if (localStorage.getItem("jwt") == null) {
+        return;
+      }
+      let token = localStorage.getItem("jwt");
+      return VueJwtDecode.decode(token).name;
+    },
     getImagePath(imgData) {
       if (imgData != null) return "http://localhost:3000/" + imgData;
     },

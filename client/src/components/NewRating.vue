@@ -12,6 +12,7 @@
         name="rating"
         value="5"
         :checked="rating == 5"
+        v-on:input="rating.rating = $event.target.value"
       /><label for="rating10" title="5 stars"></label>
       <input
         type="radio"
@@ -19,6 +20,7 @@
         name="rating"
         value="4.5"
         :checked="rating == 4.5"
+        v-on:input="rating.rating = $event.target.value"
       /><label class="half" for="rating9" title="4 1/2 stars"></label>
       <input
         type="radio"
@@ -26,6 +28,7 @@
         name="rating"
         value="4"
         :checked="rating == 4"
+        v-on:input="rating.rating = $event.target.value"
       /><label for="rating8" title="4 stars"></label>
       <input
         type="radio"
@@ -33,6 +36,7 @@
         name="rating"
         value="3.5"
         :checked="rating == 3.5"
+        v-on:input="rating.rating = $event.target.value"
       /><label class="half" for="rating7" title="3 1/2 stars"></label>
       <input
         type="radio"
@@ -40,35 +44,40 @@
         name="rating"
         value="3"
         :checked="rating == 3"
-      /><label for="rating5" title="2 1/2 stars"></label>
+        v-on:input="rating.rating = $event.target.value"
+      /><label for="rating5" title="3 stars"></label>
       <input
         type="radio"
         id="rating4"
         name="rating"
         value="2.5"
         :checked="rating == 2.5"
-      /><label class="half" for="rating4" title="2 stars"></label>
+        v-on:input="rating.rating = $event.target.value"
+      /><label class="half" for="rating4" title="2 1/2 stars"></label>
       <input
         type="radio"
-        id="rating3"
+        id="rating2"
         name="rating"
         value="2"
         :checked="rating == 2"
-      /><label for="rating3" title="1 1/2 stars"></label>
+        v-on:input="rating.rating = $event.target.value"
+      /><label for="rating2" title="2 stars"></label>
       <input
         type="radio"
         id="rating2"
         name="rating"
         value="1.5"
         :checked="rating == 1.5"
+        v-on:input="rating.rating = $event.target.value"
       /><label class="half" for="rating2" title="1 star"></label>
       <input
         type="radio"
         id="rating1"
         name="rating"
         value="1"
-        :checked="rating == 1"
-      /><label for="rating1" title="1/2 star"></label>
+        :checked="rating === 1"
+        v-on:input="rating.rating = $event.target.value"
+      /><label for="rating1" title="1 star"></label>
     </fieldset>
       </div>
       <br />
@@ -81,7 +90,7 @@
           class="form-control"
           rows="5"
           id="comment"
-          v-model="this.rating.description"
+          v-model="rating.description"
         ></textarea>
       </div>
       <br />
@@ -115,6 +124,7 @@ export default {
   props: ["mountainitem"],
   methods: {
     async AddRating() {
+      console.log(this.rating)
       this.rating.name = this.getUserName();
       let formdata = new FormData();
       formdata.append("img", this.mountainitem.img);

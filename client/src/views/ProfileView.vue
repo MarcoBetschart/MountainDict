@@ -1,17 +1,17 @@
 <template>
   <MainNavigation />
-  <Cards />
+  <ProfileDetail />
 </template>
 
 <script>
-import Cards from "../components/Cards.vue";
+import ProfileDetail from "../components/ProfileDetail.vue";
 import MainNavigation from "../components/MainNavigation.vue";
 
 export default {
   name: "ProfileView",
   components: {
     MainNavigation,
-    Cards
+    ProfileDetail
   },
 };
 </script>
