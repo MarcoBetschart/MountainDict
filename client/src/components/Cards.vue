@@ -1,14 +1,18 @@
 <template>
   <div class="container">
     <div class="row mt-2 mb-2">
-      <div class="input-group">
-        <input type="text" class="form-control" placeholder="Search" />
-        <div class="input-group-append">
-          <button class="btn btn-primary" type="button">Search</button>
+      <form @submit.prevent="search">
+        <div class="input-group">
+          <input
+            type="text"
+            class="form-control"
+            placeholder="Search"
+            v-model="searchText"
+          />
         </div>
-      </div>
+      </form>
     </div>
-    <div class="card mb-2" v-for="item in items" :key="item._id">
+    <div class="card mb-2" v-for="item in filteredMountains" :key="item._id">
       <img class="card-img-top" v-bind:src="getImagePath(item)" />
       <div class="card-body">
         <h4 class="card-title h5 h4-sm">{{ item.name }}</h4>
@@ -40,9 +44,8 @@ export default {
   data() {
     return {
       items: [],
-      description: "",
-      editedDescription: "",
-      selected: {},
+
+      searchText: "",
     };
   },
   async mounted() {
@@ -56,9 +59,33 @@ export default {
     getAvg(ratings) {
       let ratingValues = ratings.map((ele) => ele.rating);
       const sum = ratingValues.reduce((a, b) => a + b, 0);
-      return Math.round(sum / ratingValues.length * 2) / 2;
+      return Math.round((sum / ratingValues.length) * 2) / 2;
+    },
+    async search() {
+      const response = await axios.get("api/mountainitems/");
+      this.items = response.data;
     },
   },
+  computed:
+{
+  filteredMountains: function () {
+    var items = this.items;
+    var searchString = this.searchText;
+
+    if(!searchString){
+      return items;
+    }
+
+    searchString = searchString.trim().toLowerCase();
+
+    items = items.filter(function(item){
+      if(item.name.toLowerCase().indexOf(searchString) !== -1){
+        return item;
+      }
+    })
+
+    return items;
+}}
 };
 </script>
 
