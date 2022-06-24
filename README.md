@@ -44,6 +44,20 @@ Controller: Die Controller sind die Router-Dateien, mit denen man durch die REST
 ### 3.1	Komponentendiagramm
 
 ## 4. User Interface Design
+Bei den ersten Überlegungen für das User Interface war für mich bereits klar, das GUI soll sowohl für normale Bildschirme, als auch für mobile Geräte optimiert sein. Daher habe ich mich für Bootstrap entschieden. Bootstrap bietet eine vielzahl von CSS-Klassen, die für Responsive-Design optimiert sind.
+Bei der Nutzung von Mobilgeräten ist der Einsatz von Links/Buttons problematisch, da diese vielfach schwer zu treffen sind. Durch die Optimierung für solche Geräte wurde bei diesem Projekt möglichst vermieden, diese einzusetzen. Beispiel: Die Suche wird immer sofort aktualisiert, ohne einen Klick auf einen Button.
+Um die Benutzung der App zu vereinfachen, habe ich mich für eine Komonente entschieden, die dem Benutzer Rückmeldungen mithilfe von Message-Boxen gibt. So können dem Benutzer jederzeit Informationen oder Fehler mitgeteilt werden.
 
+**Zielgruppe**
+Die Zielgruppe für diese Webapplikation ist sehr gross. Das MountainDict zielt auf alle Natur- und Berglieberhaber, die gerne Informationen zu einem Berg wollen. 
+Aus diesem Grund ist die Optimierung sowohl von grossen als auch von kleinen Bildschirmen von nötig. So können Junge und ältere Menschen angesprochen werden.
 
 ## 5. Projektvorgehen
+**Emphasize**
+Um mein Projekt optimal anzugehen, habe ich mir gleich zu Beginn Gedanken gemacht, wie mein GUI dargestellt werden soll (Kapitel 4).
+
+**Define, Ideate, Prototype**
+Da ich die eingesetzte Technologie Vue.js kaum kannte, entschied ich mich, die gelernten Phasen Define, Ideate und Prototype zusammenzuführen. So konnte ich laufend neue Ideen in meine Prototyp-Seiten einbauen. So konnte ich Zeit sparen und mich auf das wesentliche, das Designm, konzentrieren.
+
+**Test**
+Um meine Arbeit so effizient wie möglich zu gestalten, habe ich jeweils nach dem erstellen einer Seite der Webapplikation einen gründlichen Test durchgeführt. Damit konnte ich Fehler frühzeitig erkennen und beheben. So sparte ich gegenüber einer Testphase am Ende viel Zeit, da ich mich nicht immer in die jeweiligen Detail-Seiten einarbeiten musste. 
