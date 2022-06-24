@@ -95,6 +95,7 @@ import RatingSummary from "./RatingSummary.vue";
 import NewRating from "./NewRating.vue";
 import StarRatingReadonly from "./StarRatingReadonly";
 import VueJwtDecode from "vue-jwt-decode";
+import router from "@/router";
 
 export default {
   name: "DetailMountain",
@@ -131,6 +132,7 @@ export default {
   },
   async mounted() {
     const route = useRoute();
+    try {
     const response = await axios.get("api/mountainitems/" + route.params.id);
     this.mountainItem.name = response.data.name;
     this.mountainItem.description = response.data.description;
@@ -179,6 +181,10 @@ export default {
       this.hasCommented = this.mountainItem.ratings.some(
         (x) => x.name === this.getUserName()
       );
+    }
+      
+    } catch (error) {
+      router.push("/404")
     }
   },
   methods: {
