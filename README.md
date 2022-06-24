@@ -17,6 +17,7 @@ Folgende User Stories wurden für das Projekt definiert:
 - Als angemeldeter Benutzer möchte ich mich ausloggen können, damit nur ich Daten mit meinem Nutzer erfassen kann.
 
 ## 3. Aufbau der Lösung
+### 3.1 Technologien
 Das Projekt wurde als MEVN Applikation aufgebaut. MEVN ist eines der am häufig eingesetzten JavaScript-Stacks. Als Stack wird ein Reihe von Frameworks und Tools
 bezeichnet, die zusammen eingesetzt werden können, um eine Softwareanwendung aufzubauen. 
 MEVN steht für:
@@ -26,16 +27,23 @@ MEVN steht für:
 
 **Express.js**: Ein Webapplikationsframework für Node.js.
 
-**Vue.js**: Ein Clientseitiges JavaScript-Framework zum Aufbau von Webapplikationen. Es 
+**Vue.js**: Ein Clientseitiges JavaScript-Framework zum Aufbau von Webapplikationen.
 
 **Node.js**: Eine Umgebung zum Ausführen von JavaScript.
 
 Im Frontend ist die Benutzeroberfläche mit Vue.js aufgebaut. Durch den Einsatz von Vue.js kann der Inhalt dynamisch geladen werden. Um diese Daten laden zu können, 
 gibt es im Application Server eine REST-API. Die Aufrufe der API werden im Frontend durchgeführt. Dadurch können die Daten aus der MongoDB geladen werden.
 
+**Design Pattern**
+Das Projekt wurde so weit es geht mit MVC (Mode-View-Controller). Jedoch findet man in Webapplikationen häufig auch auf der View Logik, die jedoch nicht aus dem Frontend trennbar ist.
+
+Model: Die Models sind im Ordner Models abgelegt. Für dieses Projekt gibt es die Models MountainItem und User. 
+View: Die Views sind alle Vue.js Dateien. Darin sind alle Benutzeroberflächen implementiert.
+Controller: Die Controller sind die Router-Dateien, mit denen man durch die REST API die Daten aus der MongoDB laden kann.
+
 ### 3.1	Komponentendiagramm
 
-## 4.	User Interface Design
+## 4. User Interface Design
 
 
-## 5.	Projektvorgehen
+## 5. Projektvorgehen
