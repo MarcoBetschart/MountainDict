@@ -10,6 +10,7 @@
           <h4 class="card-title h5 h4-sm">{{ mountainItem.name }}</h4>
           <p class="card-text">{{ mountainItem.description }}</p>
           <p class="card-text">{{ mountainItem.height }} m.ü.M</p>
+          <p class="card-text">{{ mountainItem.officialPath }}</p>
           <div class="ratings">
             <hr />
 
